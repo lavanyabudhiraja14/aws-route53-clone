@@ -39,9 +39,9 @@ export default function ZoneRecordsPage() {
     const handleCreateShortcut = () => {
       setCreateOpen(true);
     };
-  
+
     window.addEventListener("route53:create", handleCreateShortcut);
-  
+
     return () => {
       window.removeEventListener("route53:create", handleCreateShortcut);
     };
@@ -107,6 +107,58 @@ export default function ZoneRecordsPage() {
   const selectedRecord =
     records.find((r) => r.id === selected) ?? null;
 
+  function exportJson() {
+    if (!zone) {
+      toast.error("Unable to export", "Hosted zone information is not available.");
+      return;
+    }
+
+    const exportData = {
+      hostedZone: {
+        id: zone.id,
+        name: zone.name,
+        type: zone.type,
+        comment: zone.comment,
+        record_count: zone.record_count,
+        created_at: zone.created_at,
+      },
+      records: records.map((record) => ({
+        id: record.id,
+        name: record.name,
+        type: record.type,
+        ttl: record.ttl,
+        value: record.value,
+        routing_policy: record.routing_policy,
+      })),
+    };
+
+    const json = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([json], {
+      type: "application/json",
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    const safeZoneName = zone.name
+      .replace(/\.$/, "")
+      .replace(/[^a-zA-Z0-9-_]/g, "_");
+
+    link.href = url;
+    link.download = `${safeZoneName || "hosted-zone"}.json`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+    toast.success(
+      "Hosted zone exported",
+      `${zone.name} was exported as a JSON file.`
+    );
+  }
+
   return (
     <div>
       <div className="mb-3 text-[13px] text-[#545b64]">
@@ -135,7 +187,14 @@ export default function ZoneRecordsPage() {
           </p>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <SecondaryButton
+            onClick={exportJson}
+            disabled={!zone || loading}
+          >
+            Export JSON
+          </SecondaryButton>
+
           <SecondaryButton
             disabled={!selectedRecord}
             onClick={() => setEditOpen(true)}
@@ -427,6 +486,7 @@ function RecordFormModal({
   );
 
   const [saving, setSaving] = useState(false);
+
   const [error, setError] = useState<string | null>(
     null
   );

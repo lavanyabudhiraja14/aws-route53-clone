@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/auth";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
+import { KeyboardShortcuts } from "@/components/keyboardShortcuts";
 
 export function ConsoleShell({ children }: { children: React.ReactNode }) {
   const { ready, authenticated } = useAuth();
@@ -29,6 +30,7 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-0 flex-1">
         <Sidebar />
         <main className="min-w-0 flex-1 overflow-auto px-6 py-5">{children}</main>
+        <KeyboardShortcuts />
       </div>
     </div>
   );

@@ -107,3 +107,43 @@ These sections are intentionally mocked because they are outside the core hosted
 
 ---
 
+### Keyboard Shortcuts
+
+The Route 53 console supports keyboard shortcuts for faster navigation and common actions.
+
+| Shortcut | Action |
+|---|---|
+| `?` | Open keyboard shortcuts help |
+| `/` | Focus the current page's search field |
+| `Esc` | Close the currently open modal |
+| `n` | Create a new item |
+| `g` → `h` | Go to Hosted Zones |
+| `g` → `d` | Go to Dashboard |
+| `g` → `r` | Go to Resolver |
+| `g` → `t` | Go to Traffic Policies |
+
+#### Context-aware Create Shortcut
+
+The `n` shortcut adapts to the current page:
+
+- Inside a hosted zone, `n` opens the **Create Record** form.
+
+Shortcuts are disabled while typing inside text inputs, textareas, selects, or editable fields to avoid interfering with normal typing.
+
+### Theme / Visual Mode
+
+The console supports both **Light Mode** and **Dark Mode**, with the theme preference persisted across sessions.
+
+To change the visual mode:
+
+1. Log in using the demo account:
+   - **Username:** `admin`
+   - **Password:** `admin123`
+2. Click the **Admin** account menu in the top-right corner of the console.
+3. Open the **Visual Mode / Theme** option.
+4. Select either:
+   - **Light Mode**
+   - **Dark Mode**
+5. The selected mode is applied immediately and saved in the browser, so it remains active when you return to the application.
+
+The dark mode is designed to follow the AWS Management Console visual style, including dark navigation, pages, tables, forms, modals, and other console components.

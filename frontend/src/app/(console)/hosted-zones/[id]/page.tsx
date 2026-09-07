@@ -35,6 +35,18 @@ export default function ZoneRecordsPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+  useEffect(() => {
+    const handleCreateShortcut = () => {
+      setCreateOpen(true);
+    };
+  
+    window.addEventListener("route53:create", handleCreateShortcut);
+  
+    return () => {
+      window.removeEventListener("route53:create", handleCreateShortcut);
+    };
+  }, []);
+
   const toast = useToast();
 
   const load = useCallback(

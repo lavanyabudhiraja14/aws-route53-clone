@@ -115,7 +115,7 @@ export function ToastProvider({
 
       <div
         aria-live="polite"
-        className="pointer-events-none fixed right-4 top-14 z-[100] flex w-full max-w-sm flex-col gap-2"
+        className="pointer-events-none fixed right-4 top-14 z-[99999] flex w-full max-w-sm flex-col gap-2"
       >
         {toasts.map((toast) => {
           const style = KIND_STYLES[toast.kind];

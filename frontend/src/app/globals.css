@@ -1007,3 +1007,521 @@ html.dark .route53-hosted-zones-table .aws-table td{background:#161e2d;color:#f2
 html.dark .route53-hosted-zones-table .aws-table tbody tr:hover td{background:#202b38}
 html.dark .route53-muted-cell,html.dark .route53-zone-id{color:#aab7b8 !important}
 html.dark .route53-hosted-zones-pagination{background:#111820;border-color:#3a4653;color:#aab7b8}
+
+
+/* =========================================================
+   DARK MODE POLISH — AWS CONSOLE CONTROLS
+   ========================================================= */
+
+/* The Route 53 title strip should be part of the dark sidebar, not white. */
+html.dark .route53-sidebar-header {
+  background: #111820 !important;
+  border-bottom-color: #3a4653 !important;
+}
+
+html.dark .route53-sidebar-title {
+  color: #f2f3f3 !important;
+}
+
+html.dark .route53-sidebar-close {
+  color: #879596 !important;
+}
+
+html.dark .route53-sidebar-close:hover {
+  color: #f2f3f3 !important;
+}
+
+/* Secondary AWS console buttons: dark, subtle and readable in dark mode. */
+html.dark button.bg-white,
+html.dark .route53-hosted-zones-actions button:not(.bg-\[\#ec7211\]),
+html.dark .route53-hosted-zones-pagination button {
+  background: #202b38 !important;
+  color: #f2f3f3 !important;
+  border-color: #5b6875 !important;
+}
+
+html.dark button.bg-white:hover:not(:disabled),
+html.dark .route53-hosted-zones-actions button:hover:not(:disabled),
+html.dark .route53-hosted-zones-pagination button:hover:not(:disabled) {
+  background: #2b3948 !important;
+  color: #ffffff !important;
+  border-color: #879596 !important;
+}
+
+/* Disabled buttons should look intentionally disabled, not like grey blocks. */
+html.dark button:disabled {
+  opacity: 1 !important;
+}
+
+html.dark button.bg-white:disabled,
+html.dark .route53-hosted-zones-actions button:disabled,
+html.dark .route53-hosted-zones-pagination button:disabled {
+  background: #252e39 !important;
+  color: #71808c !important;
+  border-color: #3f4a56 !important;
+  cursor: not-allowed;
+}
+
+/* Keep the orange primary action AWS-orange in dark mode. */
+html.dark button.bg-\[\#ec7211\] {
+  background: #ec7211 !important;
+  color: #ffffff !important;
+  border-color: #ec7211 !important;
+}
+
+html.dark button.bg-\[\#ec7211\]:hover:not(:disabled) {
+  background: #eb5f07 !important;
+}
+
+/* Account dropdown and Visual mode submenu. */
+html.dark .aws-account-dropdown {
+  background: #202b38 !important;
+  border-color: #3a4653 !important;
+  color: #f2f3f3 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark .aws-account-header {
+  background: #202b38 !important;
+  border-bottom-color: #3a4653 !important;
+}
+
+html.dark .aws-account-header span {
+  color: #879596 !important;
+}
+
+html.dark .aws-account-header strong {
+  color: #f2f3f3 !important;
+}
+
+html.dark .aws-account-item {
+  background: #202b38 !important;
+  color: #f2f3f3 !important;
+  border: 0 !important;
+}
+
+html.dark .aws-account-item:hover,
+html.dark .aws-account-item.is-open {
+  background: #2b3948 !important;
+}
+
+html.dark .aws-visual-mode-menu {
+  background: #161e2d !important;
+  border-top: 1px solid #3a4653 !important;
+  border-bottom: 1px solid #3a4653 !important;
+}
+
+html.dark .aws-visual-mode-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px 9px 25px;
+  border: 0;
+  background: #161e2d !important;
+  color: #f2f3f3 !important;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+html.dark .aws-visual-mode-option:hover {
+  background: #2b3948 !important;
+}
+
+html.dark .aws-visual-mode-option.aws-visual-mode-selected {
+  font-weight: 700;
+}
+
+html.dark .aws-theme-radio {
+  width: 14px;
+  color: #539fe5 !important;
+}
+
+html.dark .aws-account-dropdown .aws-signout {
+  background: #202b38 !important;
+  border-top: 1px solid #3a4653 !important;
+  color: #ff7b72 !important;
+}
+
+html.dark .aws-account-dropdown .aws-signout:hover {
+  background: #2b3948 !important;
+  color: #ffaea8 !important;
+}
+
+/* =========================================================
+   COMPLETE DARK MODE — FULL ROUTE 53 CONSOLE
+   Keep the existing layout/components unchanged.
+   These overrides make the entire console dark, including
+   sidebar, page background, search controls, tables,
+   pagination, cards, forms and Tailwind utility elements.
+   ========================================================= */
+
+/* =========================================================
+   ROUTE 53 — FINAL DARK MODE FIX
+   Add this at the VERY END of:
+   frontend/src/app/globals.css
+   ========================================================= */
+
+   html.dark, html.dark body { background:#0f171f !important; color:#f2f3f3 !important; }
+   html.dark body, html.dark main, html.dark [role="main"] { background-color:#0f171f !important; color:#f2f3f3 !important; }
+   
+   /* Remove accidental light Tailwind surfaces */
+   html.dark .bg-white, html.dark .bg-\[\#ffffff\], html.dark .bg-\[\#fff\] { background-color:#161e2d !important; }
+   html.dark .text-\[\#16191f\] { color:#f2f3f3 !important; }
+   html.dark .text-\[\#545b64\] { color:#aab7b8 !important; }
+   html.dark .border-\[\#d5dbdb\], html.dark .border-\[\#eaeded\] { border-color:#3a4653 !important; }
+   
+   /* Sidebar */
+   html.dark .route53-sidebar { background:#111820 !important; border-right-color:#3a4653 !important; color:#d5dbdb !important; }
+   html.dark .route53-sidebar-header { background:#111820 !important; border-bottom-color:#3a4653 !important; }
+   html.dark .route53-sidebar-title { color:#f2f3f3 !important; }
+   html.dark .route53-sidebar-close { color:#aab7b8 !important; }
+   html.dark .route53-sidebar-close:hover { color:#fff !important; }
+   
+   /* Hosted Zones */
+   html.dark .route53-hosted-zones-page { background:transparent !important; color:#f2f3f3 !important; }
+   html.dark .route53-hosted-zones-breadcrumb { color:#aab7b8 !important; }
+   html.dark .route53-hosted-zones-card { background:#161e2d !important; border-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-header { background:#161e2d !important; border-bottom-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-header h1 { color:#f2f3f3 !important; }
+   html.dark .route53-automatic-mode { background:#161e2d !important; color:#aab7b8 !important; border-bottom-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-filter { background:#161e2d !important; }
+   html.dark .route53-hosted-zones-search label, html.dark .route53-hosted-zones-type label { color:#f2f3f3 !important; }
+   html.dark .route53-hosted-zones-table { background:#161e2d !important; border-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-table .aws-table { background:#161e2d !important; color:#f2f3f3 !important; }
+   html.dark .route53-hosted-zones-table .aws-table th { background:#202b38 !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-table .aws-table td { background:#161e2d !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark .route53-hosted-zones-table .aws-table tbody tr:hover td { background:#202b38 !important; }
+   html.dark .route53-hosted-zones-pagination { background:#111820 !important; color:#aab7b8 !important; border-color:#3a4653 !important; }
+   
+   /* Record detail page — screenshot 2 */
+   html.dark .route53-records-page, html.dark .route53-record-page, html.dark .route53-zone-page { background:transparent !important; color:#f2f3f3 !important; }
+   html.dark .route53-records-page h1, html.dark .route53-record-page h1, html.dark .route53-zone-page h1 { color:#f2f3f3 !important; }
+   html.dark .route53-records-page p, html.dark .route53-record-page p, html.dark .route53-zone-page p { color:#aab7b8 !important; }
+   html.dark .route53-records-page .overflow-hidden, html.dark .route53-record-page .overflow-hidden, html.dark .route53-zone-page .overflow-hidden { background:#161e2d !important; border-color:#3a4653 !important; }
+   html.dark .route53-records-page .aws-table, html.dark .route53-record-page .aws-table, html.dark .route53-zone-page .aws-table { background:#161e2d !important; color:#f2f3f3 !important; }
+   html.dark .route53-records-page .aws-table th, html.dark .route53-record-page .aws-table th, html.dark .route53-zone-page .aws-table th { background:#202b38 !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark .route53-records-page .aws-table td, html.dark .route53-record-page .aws-table td, html.dark .route53-zone-page .aws-table td { background:#161e2d !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark .route53-records-page .aws-table tbody tr:hover td, html.dark .route53-record-page .aws-table tbody tr:hover td, html.dark .route53-zone-page .aws-table tbody tr:hover td { background:#202b38 !important; }
+   
+   /* Inputs */
+   html.dark .route53-input, html.dark .route53-select, html.dark input, html.dark select, html.dark textarea { background:#0f171f !important; color:#f2f3f3 !important; border-color:#687078 !important; }
+   html.dark input::placeholder, html.dark textarea::placeholder { color:#8b969d !important; }
+   html.dark .route53-input:focus, html.dark .route53-select:focus, html.dark input:focus, html.dark select:focus, html.dark textarea:focus { border-color:#00a1c9 !important; box-shadow:0 0 0 1px #00a1c9 !important; }
+   html.dark option { background:#161e2d !important; color:#f2f3f3 !important; }
+   
+   /* Secondary buttons and disabled buttons */
+   html.dark .route53-button:not(.route53-button-primary) { background:#202b38 !important; color:#f2f3f3 !important; border-color:#687078 !important; }
+   html.dark .route53-button:not(.route53-button-primary):hover { background:#2b3948 !important; }
+   html.dark button:disabled { background:#202b38 !important; color:#7f8b94 !important; border-color:#3a4653 !important; opacity:1 !important; cursor:not-allowed !important; }
+   html.dark .route53-button-primary { background:#ec7211 !important; color:#fff !important; border-color:#ec7211 !important; }
+   html.dark .route53-button-primary:hover { background:#ff8c00 !important; }
+   
+   /* Modal — screenshot 1 */
+   html.dark .route53-modal-backdrop { background:rgba(0,0,0,.68) !important; }
+   html.dark .route53-modal { background:#161e2d !important; color:#f2f3f3 !important; border-color:#3a4653 !important; box-shadow:0 10px 35px rgba(0,0,0,.55) !important; }
+   html.dark .route53-modal-header { background:#161e2d !important; border-bottom-color:#3a4653 !important; }
+   html.dark .route53-modal-header h2 { color:#f2f3f3 !important; }
+   html.dark .route53-modal-body { background:#161e2d !important; color:#f2f3f3 !important; }
+   html.dark .route53-modal-footer { background:#111820 !important; border-top-color:#3a4653 !important; }
+   html.dark .route53-modal label, html.dark .route53-modal .font-bold, html.dark .route53-modal strong { color:#f2f3f3 !important; }
+   html.dark .route53-modal .bg-\[\#fdf3f1\] { background:#321b18 !important; color:#ffb4a8 !important; border-color:#d13212 !important; }
+   
+   /* Fallback for dialog implementations */
+   html.dark [role="dialog"] { background:#161e2d !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark [role="dialog"] input, html.dark [role="dialog"] select, html.dark [role="dialog"] textarea { background:#0f171f !important; color:#f2f3f3 !important; }
+   html.dark [role="dialog"] label { color:#f2f3f3 !important; }
+   
+   /* Account dropdown */
+   html.dark .aws-account-dropdown { background:#161e2d !important; color:#f2f3f3 !important; border-color:#3a4653 !important; }
+   html.dark .aws-account-header { background:#161e2d !important; border-bottom-color:#3a4653 !important; }
+   html.dark .aws-account-header span { color:#8b969d !important; }
+   html.dark .aws-account-header strong { color:#f2f3f3 !important; }
+   html.dark .aws-account-dropdown button { background:#161e2d !important; color:#f2f3f3 !important; }
+   html.dark .aws-account-dropdown button:hover { background:#202b38 !important; }
+   html.dark .aws-account-dropdown .aws-signout { color:#ff8f7a !important; border-top-color:#3a4653 !important; }
+   html.dark .aws-visual-mode-menu { background:#111820 !important; border-color:#3a4653 !important; }
+   html.dark .aws-visual-mode-option { background:#111820 !important; color:#f2f3f3 !important; }
+   html.dark .aws-visual-mode-option:hover, html.dark .aws-visual-mode-selected { background:#202b38 !important; color:#fff !important; }
+   
+   /* Dark scrollbar */
+   html.dark ::-webkit-scrollbar { width:10px; height:10px; }
+   html.dark ::-webkit-scrollbar-track { background:#111820; }
+   html.dark ::-webkit-scrollbar-thumb { background:#3a4653; border-radius:4px; }
+   html.dark ::-webkit-scrollbar-thumb:hover { background:#536170; }
+
+   /* =========================================================
+   Route 53 hosted-zone type cards
+   Add to the END of frontend/src/app/globals.css
+   ========================================================= */
+
+.route53-zone-type-field {
+  margin: 18px 0;
+}
+
+.route53-zone-type-label {
+  margin-bottom: 7px;
+  color: #16191f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.route53-zone-type-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.route53-zone-type-card {
+  position: relative;
+  display: block;
+  min-height: 92px;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid #879596;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.route53-zone-type-card:hover {
+  border-color: #00a1c9;
+}
+
+.route53-zone-type-card.is-selected {
+  border: 2px solid #00a1c9;
+  padding: 13px 15px;
+  background: #f4fbfd;
+  box-shadow: inset 0 0 0 1px rgba(0, 161, 201, 0.08);
+}
+
+.route53-zone-type-card > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.route53-zone-type-card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.route53-zone-type-radio {
+  flex: 0 0 15px;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  box-sizing: border-box;
+  border: 2px solid #687078;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.route53-zone-type-card.is-selected .route53-zone-type-radio {
+  border-color: #00a1c9;
+  box-shadow: inset 0 0 0 3px #ffffff;
+  background: #00a1c9;
+}
+
+.route53-zone-type-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.route53-zone-type-copy strong {
+  color: #16191f;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.route53-zone-type-copy span {
+  color: #545b64;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+/* ---------- Dark mode ---------- */
+
+
+   html.dark .bg-\[\#fafafa\] {
+    background-color: #111820 !important;
+  }
+  
+  html.dark .bg-\[\#ffffff\],
+  html.dark .bg-white {
+    background-color: #161e2d !important;
+  }
+  
+  html.dark .border-\[\#eaeded\] {
+    border-color: #3a4653 !important;
+  }
+  
+  /* Records table footer / pagination */
+  html.dark .overflow-hidden > .flex.items-center.justify-between.border-t {
+    background-color: #111820 !important;
+    color: #aab7b8 !important;
+    border-top-color: #3a4653 !important;
+  }
+  
+  /* Pagination text */
+  html.dark .overflow-hidden > .flex.items-center.justify-between.border-t span {
+    color: #aab7b8 !important;
+  }
+  
+  /* Previous / Next buttons in the records footer */
+  html.dark .overflow-hidden > .flex.items-center.justify-between.border-t button {
+    background: #202b38 !important;
+    color: #f2f3f3 !important;
+    border: 1px solid #687078 !important;
+  }
+  
+  html.dark .overflow-hidden > .flex.items-center.justify-between.border-t button:hover:not(:disabled) {
+    background: #2b3948 !important;
+    border-color: #879596 !important;
+  }
+  
+  html.dark .overflow-hidden > .flex.items-center.justify-between.border-t button:disabled {
+    background: #202b38 !important;
+    color: #687078 !important;
+    border-color: #3a4653 !important;
+  }
+  
+  /* Records table itself — keep every section dark */
+  html.dark .overflow-hidden > table,
+  html.dark .overflow-hidden > table thead,
+  html.dark .overflow-hidden > table tbody,
+  html.dark .overflow-hidden > table tr,
+  html.dark .overflow-hidden > table th,
+  html.dark .overflow-hidden > table td {
+    background-color: #161e2d !important;
+    color: #f2f3f3 !important;
+  }
+  
+  html.dark .overflow-hidden > table th {
+    background-color: #202b38 !important;
+  }
+  
+  html.dark .overflow-hidden > table th,
+  html.dark .overflow-hidden > table td,
+  html.dark .overflow-hidden > table tr {
+    border-color: #3a4653 !important;
+  }
+  
+  /* Empty state */
+  html.dark .overflow-hidden > table td.text-center {
+    color: #aab7b8 !important;
+  }
+  
+  /* ---------- Hosted zone create/edit modal footer ---------- */
+  
+  html.dark [role="dialog"] footer,
+  html.dark [role="dialog"] .border-t,
+  html.dark .route53-modal-footer {
+    background-color: #111820 !important;
+    border-top-color: #3a4653 !important;
+  }
+  
+  /* If your Modal uses a plain div for the footer, catch the
+     light Tailwind background too. */
+  html.dark [role="dialog"] .bg-\[\#fafafa\] {
+    background-color: #111820 !important;
+  }
+  
+  /* Modal Save button remains AWS orange */
+  html.dark [role="dialog"] button.bg-\[\#ec7211\],
+  html.dark [role="dialog"] button.bg-\[\#ff9900\] {
+    background-color: #ec7211 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Modal Cancel button */
+  html.dark [role="dialog"] button:not(.bg-\[\#ec7211\]):not(.bg-\[\#ff9900\]) {
+    background-color: #202b38 !important;
+    color: #f2f3f3 !important;
+    border-color: #687078 !important;
+  }
+  
+  /* ---------- Prevent light backgrounds from leaking into
+     dark console pages ---------- */
+  
+  html.dark .route53-hosted-zones-card,
+  html.dark .route53-hosted-zones-table,
+  html.dark .route53-hosted-zones-table .aws-table {
+    background-color: #161e2d !important;
+  }
+  
+  html.dark .route53-hosted-zones-pagination {
+    background-color: #111820 !important;
+  }
+  
+  /* ---------- Smooth AWS-style dark surfaces ---------- */
+  
+  html.dark .route53-hosted-zones-card {
+    box-shadow: none !important;
+  }
+  
+  html.dark .route53-hosted-zones-table {
+    box-shadow: none !important;
+  }
+  /* =========================================================
+   DARK MODE — HOSTED ZONE TYPE CARDS
+   ========================================================= */
+
+html.dark .route53-zone-type-card {
+  background: #111827 !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #5b6675 !important;
+}
+
+html.dark .route53-zone-type-card strong {
+  color: #f3f4f6 !important;
+}
+
+html.dark .route53-zone-type-card-content,
+html.dark .route53-zone-type-copy {
+  color: #d1d5db !important;
+}
+
+html.dark .route53-zone-type-copy > span {
+  color: #9ca3af !important;
+}
+
+/* Selected Public/Private card */
+html.dark .route53-zone-type-card.is-selected {
+  background: #17202c !important;
+  border: 2px solid #00a8e1 !important;
+}
+
+html.dark .route53-zone-type-card.is-selected strong {
+  color: #ffffff !important;
+}
+
+html.dark .route53-zone-type-card.is-selected .route53-zone-type-copy > span {
+  color: #cbd5e1 !important;
+}
+
+/* Radio circle */
+html.dark .route53-zone-type-radio {
+  border-color: #9ca3af !important;
+}
+
+html.dark .route53-zone-type-card.is-selected .route53-zone-type-radio {
+  border-color: #00a8e1 !important;
+  background: #00a8e1 !important;
+}
+
+/* Actual hidden/native radio */
+html.dark .route53-zone-type-card input[type="radio"] {
+  accent-color: #00a8e1;
+}

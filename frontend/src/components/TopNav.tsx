@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "@/lib/theme";
 import { useAuth } from "@/lib/auth";
 import { AwsSmile } from "@/components/AwsLogo";
 
 export function TopNav() {
   const { username, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [accountOpen, setAccountOpen] = useState(false);
+  const [visualModeOpen, setVisualModeOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   return (
@@ -153,7 +156,10 @@ export function TopNav() {
           <button
             type="button"
             className="aws-topnav-account"
-            onClick={() => setAccountOpen((value) => !value)}
+            onClick={() => {
+              setAccountOpen((value) => !value);
+              setVisualModeOpen(false);
+            }}
           >
             <span>{username || "Account"}</span>
             <span className="aws-chevron">▼</span>
@@ -168,9 +174,47 @@ export function TopNav() {
 
               <button
                 type="button"
+                className={`aws-account-item aws-visual-mode-trigger ${visualModeOpen ? "is-open" : ""}`}
+                onClick={() => setVisualModeOpen((value) => !value)}
+                aria-expanded={visualModeOpen}
+              >
+                <span>Visual mode</span>
+                <span className="aws-visual-mode-chevron">{visualModeOpen ? "▲" : "▼"}</span>
+              </button>
+
+              {visualModeOpen && (
+                <div className="aws-visual-mode-menu">
+                  <button
+                    type="button"
+                    className={`aws-visual-mode-option ${theme === "light" ? "aws-visual-mode-selected" : ""}`}
+                    onClick={() => {
+                      setTheme("light");
+                      setVisualModeOpen(false);
+                    }}
+                  >
+                    <span className="aws-theme-radio">{theme === "light" ? "●" : "○"}</span>
+                    <span>Light</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`aws-visual-mode-option ${theme === "dark" ? "aws-visual-mode-selected" : ""}`}
+                    onClick={() => {
+                      setTheme("dark");
+                      setVisualModeOpen(false);
+                    }}
+                  >
+                    <span className="aws-theme-radio">{theme === "dark" ? "●" : "○"}</span>
+                    <span>Dark</span>
+                  </button>
+                </div>
+              )}
+
+              <button
+                type="button"
                 className="aws-signout"
                 onClick={() => {
                   setAccountOpen(false);
+                  setVisualModeOpen(false);
                   void logout();
                 }}
               >

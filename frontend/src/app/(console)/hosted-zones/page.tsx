@@ -234,33 +234,33 @@ function ZoneFormModal({
   async function save() {
     setSaving(true);
     setError(null);
-  
+
     try {
       if (zone) {
         await api.updateHostedZone(zone.id, { name, type, comment });
-  
+
         toast.success(
           "Hosted zone updated",
           `${name} was updated successfully.`,
         );
       } else {
         await api.createHostedZone({ name, type, comment });
-  
+
         toast.success(
           "Hosted zone created",
           `${name} was created successfully.`,
         );
       }
-  
+
       onSaved();
     } catch (err) {
       const message =
         err instanceof ApiError
           ? err.detail
           : "Unable to save hosted zone";
-  
+
       setError(message);
-  
+
       toast.error(
         zone
           ? "Failed to update hosted zone"
@@ -279,7 +279,10 @@ function ZoneFormModal({
       footer={
         <>
           <SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
-          <PrimaryButton disabled={saving || !name.trim()} onClick={() => void save()}>
+          <PrimaryButton
+            disabled={saving || !name.trim()}
+            onClick={() => void save()}
+          >
             {saving ? "Saving…" : "Save"}
           </PrimaryButton>
         </>
@@ -290,19 +293,75 @@ function ZoneFormModal({
           {error}
         </div>
       ) : null}
+
       <Field label="Domain name" hint="For example, example.com">
-        <input className={inputClass} value={name} onChange={(e) => setName(e.target.value)} />
-      </Field>
-      <Field label="Type">
-        <select
+        <input
           className={inputClass}
-          value={type}
-          onChange={(e) => setType(e.target.value as ZoneType)}
-        >
-          <option value="Public">Public hosted zone</option>
-          <option value="Private">Private hosted zone</option>
-        </select>
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoFocus
+        />
       </Field>
+
+      {/* AWS Route 53-style hosted zone type selector */}
+      <div className="route53-zone-type-field">
+        <div className="route53-zone-type-label">
+          Type
+        </div>
+
+        <div className="route53-zone-type-options">
+          <label
+            className={`route53-zone-type-card ${
+              type === "Public" ? "is-selected" : ""
+            }`}
+          >
+            <input
+              type="radio"
+              name="hosted-zone-type"
+              value="Public"
+              checked={type === "Public"}
+              onChange={() => setType("Public")}
+            />
+
+            <span className="route53-zone-type-card-content">
+              <span className="route53-zone-type-radio" />
+              <span className="route53-zone-type-copy">
+                <strong>Public hosted zone</strong>
+                <span>
+                  A public hosted zone determines how traffic is routed
+                  on the internet.
+                </span>
+              </span>
+            </span>
+          </label>
+
+          <label
+            className={`route53-zone-type-card ${
+              type === "Private" ? "is-selected" : ""
+            }`}
+          >
+            <input
+              type="radio"
+              name="hosted-zone-type"
+              value="Private"
+              checked={type === "Private"}
+              onChange={() => setType("Private")}
+            />
+
+            <span className="route53-zone-type-card-content">
+              <span className="route53-zone-type-radio" />
+              <span className="route53-zone-type-copy">
+                <strong>Private hosted zone</strong>
+                <span>
+                  A private hosted zone determines how traffic is routed
+                  within an Amazon VPC.
+                </span>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
       <Field label="Comment — optional">
         <textarea
           className={inputClass}

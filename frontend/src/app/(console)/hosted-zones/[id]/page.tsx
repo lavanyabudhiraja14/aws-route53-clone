@@ -31,9 +31,12 @@ export default function ZoneRecordsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [selected, setSelected] = useState<number | null>(null);
+  const [bulkSelected, setBulkSelected] = useState<number[]>([]);
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   useEffect(() => {
     const handleCreateShortcut = () => {
@@ -106,6 +109,30 @@ export default function ZoneRecordsPage() {
 
   const selectedRecord =
     records.find((r) => r.id === selected) ?? null;
+
+  const pageRecordIds = pageItems.map((record) => record.id);
+
+  const allPageSelected =
+      pageRecordIds.length > 0 &&
+      pageRecordIds.every((id) => bulkSelected.includes(id));
+    
+  function toggleBulkRecord(recordId: number) {
+      setBulkSelected((current) =>
+        current.includes(recordId)
+          ? current.filter((id) => id !== recordId)
+          : [...current, recordId],
+      );
+    }
+    
+  function toggleAllPageRecords() {
+      setBulkSelected((current) => {
+        if (allPageSelected) {
+          return current.filter((id) => !pageRecordIds.includes(id));
+        }
+    
+        return Array.from(new Set([...current, ...pageRecordIds]));
+      });
+    }
 
   function exportJson() {
     if (!zone) {
@@ -209,9 +236,13 @@ export default function ZoneRecordsPage() {
             Delete
           </SecondaryButton>
 
-          <PrimaryButton
-            onClick={() => setCreateOpen(true)}
-          >
+          {bulkSelected.length > 0 ? (
+            <DangerButton onClick={() => setBulkDeleteOpen(true)}>
+              Delete selected ({bulkSelected.length})
+            </DangerButton>
+          ) : null}
+
+          <PrimaryButton onClick={() => setCreateOpen(true)}>
             Create record
           </PrimaryButton>
         </div>
@@ -267,7 +298,14 @@ export default function ZoneRecordsPage() {
         <table className="aws-table w-full border-collapse text-left text-[13px]">
           <thead>
             <tr className="border-b border-[#eaeded]">
-              <th className="w-10 px-3 py-2" />
+              <th className="w-10 px-3 py-2">
+                <input
+                  type="checkbox"
+                  checked={allPageSelected}
+                  onChange={toggleAllPageRecords}
+                  aria-label="Select all records on this page"
+                />
+              </th>
               <th className="px-3 py-2">Record name</th>
               <th className="px-3 py-2">Type</th>
               <th className="px-3 py-2">Routing policy</th>
@@ -302,14 +340,22 @@ export default function ZoneRecordsPage() {
                   className="border-b border-[#eaeded]"
                 >
                   <td className="px-3 py-2">
-                    <input
-                      type="radio"
-                      name="record"
-                      checked={selected === record.id}
-                      onChange={() =>
-                        setSelected(record.id)
-                      }
-                    />
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={bulkSelected.includes(record.id)}
+                        onChange={() => toggleBulkRecord(record.id)}
+                        aria-label={`Select ${record.name}`}
+                      />
+
+                      <input
+                        type="radio"
+                        name="record"
+                        checked={selected === record.id}
+                        onChange={() => setSelected(record.id)}
+                        aria-label={`Choose ${record.name} for editing`}
+                      />
+                    </div>
                   </td>
 
                   <td className="px-3 py-2 font-medium">
@@ -445,6 +491,74 @@ export default function ZoneRecordsPage() {
             Delete record{" "}
             <strong>{selectedRecord.name}</strong>{" "}
             ({selectedRecord.type})?
+          </p>
+        </Modal>
+      ) : null}
+
+      {bulkDeleteOpen ? (
+        <Modal
+          title="Delete selected records"
+          onClose={() => {
+            if (!bulkDeleting) {
+              setBulkDeleteOpen(false);
+            }
+          }}
+          footer={
+            <>
+              <SecondaryButton
+                disabled={bulkDeleting}
+                onClick={() => setBulkDeleteOpen(false)}
+              >
+                Cancel
+              </SecondaryButton>
+
+              <DangerButton
+                disabled={bulkDeleting}
+                onClick={async () => {
+                  setBulkDeleting(true);
+
+                  try {
+                    await api.deleteRecordsBulk(zoneId, bulkSelected);
+
+                    toast.success(
+                      "Records deleted",
+                      `${bulkSelected.length} DNS records were deleted successfully.`
+                    );
+
+                    setBulkSelected([]);
+                    setBulkDeleteOpen(false);
+                    setSelected(null);
+
+                    await load(search);
+                  } catch (err) {
+                    const message =
+                      err instanceof ApiError
+                        ? err.detail
+                        : "Bulk delete failed";
+
+                    setError(message);
+
+                    toast.error(
+                      "Failed to delete records",
+                      message
+                    );
+                  } finally {
+                    setBulkDeleting(false);
+                  }
+                }}
+              >
+                {bulkDeleting ? "Deleting…" : "Delete"}
+              </DangerButton>
+            </>
+          }
+        >
+          <p className="text-[13px]">
+            Are you sure you want to delete{" "}
+            <strong>{bulkSelected.length} DNS records</strong>?
+          </p>
+
+          <p className="mt-2 text-[13px] text-[#545b64]">
+            This action cannot be undone.
           </p>
         </Modal>
       ) : null}

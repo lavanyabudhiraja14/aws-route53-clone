@@ -65,6 +65,9 @@ class DnsRecordUpdate(BaseModel):
     value: str | None = Field(default=None, min_length=1)
     routing_policy: str | None = Field(default=None, max_length=64)
 
+class BulkDeleteRecordsRequest(BaseModel):
+    record_ids: list[int] = Field(min_length=1)
+
 
 class DnsRecordOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)

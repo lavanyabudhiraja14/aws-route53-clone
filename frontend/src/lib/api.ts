@@ -131,4 +131,11 @@ export const api = {
       method: "DELETE",
     });
   },
+
+deleteRecordsBulk(zoneId: number, recordIds: number[]) {
+  return request<{ detail: string }>(`/hosted-zones/${zoneId}/records/bulk`, {
+    method: "DELETE",
+    body: JSON.stringify({ record_ids: recordIds }),
+  });
+},
 };
